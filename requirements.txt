@@ -1,0 +1,6 @@
+gensim
+pyenchant
+plotly
+numpy
+sklearn
+nbformat

@@ -1,0 +1,2 @@
+http://vectors.nlpl.eu/explore/embeddings/en/models/
+https://gist.github.com/creikey/42d23d1eec6d764e8a1d9fe7e56915c6#file-top-1000-nouns-txt
