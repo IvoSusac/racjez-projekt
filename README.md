@@ -8,6 +8,6 @@
  4. Run python contextgame.py
 
 run plots.ipynb:
-1. Make sure you have requirements in requirements.txt installed  
+1. Make sure you have requirements in requirements.txt and the model installed  
 2. Run the code cell and enter the input words separated by a comma and POS tagged with an underscore, e.g. ball_NOUN, time_NOUN, house_NOUN  
 3. Run every other code cell and explore the graphs!  
