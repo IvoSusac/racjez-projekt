@@ -89,9 +89,11 @@ def game(day_word, similarity_vector):
         
         word = input('Enter a word: ')
 
-        if word == '/hint':
+        if word == '/hint' and no_of_hints < len(day_word):
             print (f"the first letters of the word are: {day_word[:no_of_hints]}")
             no_of_hints += 1
+        elif word == '/hint' and no_of_hints >= len(day_word):
+            print("No more hints available.")
 
         no_of_guesses += 1
 
