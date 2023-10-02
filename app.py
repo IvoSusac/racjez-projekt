@@ -98,6 +98,8 @@ def main():
 
         st.header('Visualizing word embeddings with the Plotly library.')
 
+        st.write('On the left side of your screen you can adjust the dimension reduction method that is used to visualize the word embeddings. Select from two options - PCA or tSNE. The PCA method is a linear dimensionality reduction method that creates an orthogonal projection of the data to a lower dimensional space. The tSNE method is a non-linear dimensionality reduction method that uses a neural network and is well suited for embedding high-dimensional data for visualization in a low-dimensional space of two or three dimensions. If you want to visualize different words, select the dimensionality reduction method and type in words that you want to investigate in the appropriate text box. Type them in with their POS tag, e.g. ball_NOUN, time_NOUN. You can adjust the amount of words associated with the input words that you want to visualize. If using tSNE, you can also adjust the perplexity, learning rate and the number of iterations.')
+
         if dimension == '2D':
             st.header('2D Visualization')
             st.write('For more detail about each point, hover around each points to see the words. You can expand the visualization by clicking expand symbol in the top right corner of the visualization.')
@@ -116,6 +118,12 @@ def main():
 
             count = count+top_n
     else:
+
+        st.title('Word Guessing Game')
+
+        st.header('Guess the target word!')
+
+        st.write('Select the difficulty level of the target words on the left side of your screen. Type in a word you think is similar to the target word and press enter. The number on your screen signalizes how close you are to the target word. The smaller the number, the closer you are! If you want a hint, press the hint button. The first letters of the target word will be revealed. If you guess the word correctly, you can restart the game for more challenges. Good luck!')
         common_nouns = []
 
         with open('1000nouns/top-1000-nouns.txt') as f:
