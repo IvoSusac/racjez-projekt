@@ -54,7 +54,7 @@ psutil==5.9.5
 pure-eval==0.2.2
 pyarrow==13.0.0
 pydeck==0.8.1b0
-pyenchant==3.2.2
+pyenchant==3.0.0a1
 Pygments==2.16.1
 pyparsing==3.1.1
 python-crfsuite==0.9.9
