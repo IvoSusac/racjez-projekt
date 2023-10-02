@@ -4,7 +4,7 @@ import enchant
 
 model = "model1/model.txt"
 
-word_vectors = KeyedVectors.load_word2vec_format(model, binary=False, limit=50000)
+word_vectors = KeyedVectors.load_word2vec_format(model, binary=False, limit=10000)
 
 dict = enchant.Dict("en_US")
 
