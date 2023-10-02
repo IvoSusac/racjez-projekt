@@ -2,9 +2,9 @@ from gensim.models import KeyedVectors
 import re
 import enchant
 
-model = "model1/model.txt"
+model = "model.wordvectors"
 
-word_vectors = KeyedVectors.load_word2vec_format(model, binary=False, limit=10000)
+word_vectors = KeyedVectors.load("model.wordvectors", mmap='r')
 
 dict = enchant.Dict("en_US")
 
