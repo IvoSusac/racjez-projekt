@@ -8,7 +8,6 @@ from contextgame import getIdxDistance
 import math
 
 def game(day_word, similarity_vector):
-    st.write(day_word)
     if st.session_state.session_state['words'] == None:
         st.session_state.session_state['words'] = {}
     if st.session_state.session_state['no_of_guesses'] == None:
