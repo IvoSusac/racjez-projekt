@@ -5,37 +5,67 @@ import random
 import re
 from plots import append_list, display_scatterplot_2D, display_scatterplot_3D, model, horizontal_bar
 from contextgame import getIdxDistance
+import math
 
 def game(day_word, similarity_vector):
+    st.write(day_word)
     if st.session_state.session_state['words'] == None:
         st.session_state.session_state['words'] = {}
     if st.session_state.session_state['no_of_guesses'] == None:
         st.session_state.session_state['no_of_guesses'] = 0
     if st.session_state.session_state['no_of_hints'] == None:
         st.session_state.session_state['no_of_hints'] = 1
+    if st.session_state.session_state['points'] == None:
+        st.session_state.session_state['points'] = 0
 
 
-    word = st.sidebar.text_input("Type the word that you think is similar to the target word")
-    if st.session_state.session_state['no_of_guesses'] % 5 == 0 and st.session_state.session_state['no_of_guesses'] != 0:
+    word = st.sidebar.text_input("Type the word that you think is similar to the target word", '')
+
+    st.write('You have {} points'.format(st.session_state.session_state['points']))
+    st.write('If the word is in the closest 3000 words to the target, you get +1 point. If the word is farther than 10000 words from the target, you get -1 point. If the word is between 3000 and 10000 words from the target, you get 0 points. The lesser the tries, the higher the end score.')
+    st.write('Hints cost 2 points.')
+
+    if st.session_state.session_state['points'] > 1:
         st.write('If you would like a hint, press the hint button')
     
     hint = st.button('Hint')
-    if hint and st.session_state.session_state['no_of_hints'] < len(day_word):
+    if hint and st.session_state.session_state['no_of_hints'] < len(day_word) and st.session_state.session_state['points'] >= 2:
         st.write(f"the first letters of the word are: {day_word[:st.session_state.session_state['no_of_hints']]}")
         st.session_state.session_state['no_of_hints'] += 1
+        st.session_state.session_state['points'] -= 2
         st.write(st.session_state.session_state['no_of_hints'])
     elif hint and st.session_state.session_state['no_of_hints'] >= len(day_word):
         st.write("No more hints available.")
+    elif hint and st.session_state.session_state['points'] < 2:
+        st.write("Not enough points for a hint.")
     if word != '':
-        st.session_state.session_state['no_of_guesses'] += 1
         distance = getIdxDistance(word, day_word, similarity_vector)
-        if distance == 0:
-            st.write('Congrats, you found the word! Restart for more challenges :)')
-        if distance is None:
-            st.write('The word you entered is not in the dictionary. Try again.')
-        (st.session_state.session_state['words'])[word] = distance
-        for word, distance in st.session_state.session_state['words'].items():
-            st.write('{} -------- {}'.format(word, distance))
+        if word in st.session_state.session_state['words'].keys():
+            st.write('You already guessed this word. Try again.')
+        else:
+            (st.session_state.session_state['words'])[word] = distance
+            st.session_state.session_state['no_of_guesses'] += 1
+            if distance == 0:
+                st.write('Congrats, you found the word! Restart for more challenges :)')
+                st.write('You guessed {} times. You have earned a score of {}.'.format(st.session_state.session_state['no_of_guesses'], math.ceil(pow(math.e, st.session_state.session_state['no_of_guesses'] * -1) * 1000)))
+                if st.session_state.session_state['no_of_guesses'] == 1:
+                    st.write('''You are a genius! First try!''')
+            elif distance is None and st.session_state.session_state['points'] > 0:
+                st.write('The word you entered is not in the dictionary. Try again.')
+                st.session_state.session_state['points'] -= 1
+            elif distance is None and st.session_state.session_state['points'] <= 0:
+                st.write('The word you entered is not in the dictionary. Try again.')
+                st.session_state.session_state['points'] += 0
+            else:
+                if distance <= 3000:
+                    st.session_state.session_state['points'] += 1
+                elif distance >= 10000 and st.session_state.session_state['points'] > 0:
+                    st.session_state.session_state['points'] -= 1
+                else:
+                    st.session_state.session_state['points'] += 0
+            for word, distance in st.session_state.session_state['words'].items():
+                st.write('**{} -------- {}/{}**'.format(word, distance, 50000))
+
 
 
 
@@ -164,6 +194,7 @@ def main():
             st.session_state.session_state['words'] = None
             st.session_state.session_state['no_of_guesses'] = None
             st.session_state.session_state['no_of_hints'] = None
+            st.session_state.session_state['points'] = None
              
 
 
